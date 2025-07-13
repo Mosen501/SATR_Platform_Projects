@@ -2,7 +2,7 @@
     "type": "MySQLNotebook",
     "version": "1.0",
     "caption": "Script",
-    "content": "-- Remove the database if it already exists (avoids “database exists” error)\nDROP DATABASE IF EXISTS Excellence_School;\n\n-- Create a fresh database named “Excellence_School”\nCREATE DATABASE Excellence_School;\n\n-- Make the new database the current working schema\nUSE Excellence_School;\n\n/* ----------  Students table  ---------- */\nCREATE TABLE students (\n    student_id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  -- numeric surrogate key (starts at 100000)\n    student_name       VARCHAR(255) NOT NULL,                    -- full name in UTF-8\n    date_of_birth      DATE NOT NULL,                            -- YYYY-MM-DD\n    gender             CHAR(1) NOT NULL                          -- 'F' or 'M'\n                       CHECK (gender IN ('F','M')),\n    date_of_enrollment DATE NOT NULL,                            -- when the student joined\n    student_email      VARCHAR(255) UNIQUE,                      -- must be unique\n    academic_level     TINYINT UNSIGNED NOT NULL                 -- 1 to 6\n                       CHECK (academic_level BETWEEN 1 AND 6),\n    track              VARCHAR(10) NOT NULL                      -- `scientific` or `humanities`\n                       CHECK (track IN ('scientific','humanities')),\n    cumulative_gpa     DECIMAL(5,0) NOT NULL                     -- 0 to 100, no decimals stored\n                       CHECK (cumulative_gpa BETWEEN 0 AND 100)\n) AUTO_INCREMENT = 100000;   -- first generated student_id will be 100000\n\n\n\n/* ----------  Teachers table  ---------- */\nCREATE TABLE teachers (\n    teacher_id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  -- numeric surrogate key (starts at 200000)\n    teacher_name   VARCHAR(255) NOT NULL,                    -- full name\n    date_of_birth  DATE NOT NULL,                            -- YYYY-MM-DD\n    gender         CHAR(1) NOT NULL                          -- 'F' or 'M'\n                   CHECK (gender IN ('F','M')),\n    teacher_email  VARCHAR(255) UNIQUE,                      -- unique e-mail address\n    office_number  VARCHAR(20)                               -- on-campus office identifier\n) AUTO_INCREMENT = 200000;  -- first generated teacher_id will be 200000\n\n\n\n/* ----------  Subjects table  ---------- */\nCREATE TABLE subjects (\n    subject_id   INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  -- numeric surrogate key (starts at 300000)\n    subject_name VARCHAR(255) NOT NULL                     -- course title (e.g. “Biology”)\n) AUTO_INCREMENT = 300000;  -- first generated subject_id will be 300000\n\n/* ----------  30 students  ---------- */\nINSERT INTO students\n        (student_name,\n         date_of_birth, gender,\n         date_of_enrollment, student_email,\n         academic_level, track, cumulative_gpa)\nVALUES\n  ('Leen Aldossari',   '2009-08-13', 'F', '2023-09-01', 'leen.aldossari0@example.com', 3, 'humanities', 87),\n  ('Rania Alzahrani',  '2006-02-20', 'F', '2023-09-01', 'rania.alzahrani1@example.com', 3, 'scientific', 80),\n  ('Fatimah Alenzi',   '2009-06-16', 'F', '2023-09-01', 'fatimah.alenzi2@example.com', 5, 'scientific', 89),\n  ('Noura Alqahtani',  '2005-09-16', 'F', '2023-09-01', 'noura.alqahtani3@example.com', 4, 'humanities', 66),\n  ('Nasser Alghamdi',  '2007-07-23', 'M', '2023-09-01', 'nasser.alghamdi4@example.com', 6, 'scientific', 78),\n  ('Nada Alshammari',  '2006-12-28', 'F', '2023-09-01', 'nada.alshammari5@example.com', 1, 'scientific', 94),\n  ('Omar Aldhafeeri',  '2009-08-03', 'M', '2023-09-01', 'omar.aldhafeeri6@example.com', 1, 'humanities', 76),\n  ('Fatimah Alotaibi', '2006-09-11', 'F', '2023-09-01', 'fatimah.alotaibi7@example.com', 5, 'scientific', 75),\n  ('Lina Alharbi',     '2006-10-08', 'F', '2023-09-01', 'lina.alharbi8@example.com', 3, 'scientific', 74),\n  ('Ibrahim Alshehri', '2009-05-16', 'M', '2023-09-01', 'ibrahim.alshehri9@example.com', 1, 'scientific', 86),\n  ('Sultan Alshehri',  '2009-12-30', 'M', '2023-09-01', 'sultan.alshehri10@example.com', 5, 'humanities', 71),\n  ('Salma Aldhafeeri', '2007-11-19', 'F', '2023-09-01', 'salma.aldhafeeri11@example.com', 4, 'humanities', 87),\n  ('Lina Alsulami',    '2006-06-03', 'F', '2023-09-01', 'lina.alsulami12@example.com', 3, 'scientific', 68),\n  ('Rania Alsulami',   '2007-01-24', 'F', '2023-09-01', 'rania.alsulami13@example.com', 3, 'scientific', 86),\n  ('Khalid Aldhafeeri','2008-01-04', 'M', '2023-09-01', 'khalid.aldhafeeri14@example.com', 2, 'scientific', 89),\n  ('Ibrahim Alotaibi', '2005-10-22', 'M', '2023-09-01', 'ibrahim.alotaibi15@example.com', 1, 'scientific', 62),\n  ('Tariq Alzahrani',  '2006-07-03', 'M', '2023-09-01', 'tariq.alzahrani16@example.com', 3, 'scientific', 72),\n  ('Yousef Almalki',   '2008-12-04', 'M', '2023-09-01', 'yousef.almalki17@example.com', 4, 'scientific',100),\n  ('Sultan Alsulami',  '2008-02-27', 'M', '2023-09-01', 'sultan.alsulami18@example.com', 3, 'scientific', 82),\n  ('Hassan Alsulami',  '2007-01-17', 'M', '2023-09-01', 'hassan.alsulami19@example.com', 4, 'scientific', 90),\n  ('Hatem Aldossari',  '2007-12-16', 'M', '2023-09-01', 'hatem.aldossari20@example.com', 5, 'scientific', 89),\n  ('Nasser Almalki',   '2007-03-11', 'M', '2023-09-01', 'nasser.almalki21@example.com', 5, 'humanities', 74),\n  ('Yousef Alsaud',    '2007-11-14', 'M', '2023-09-01', 'yousef.alsaud22@example.com', 5, 'humanities', 79),\n  ('Noura Alshammari', '2007-12-01', 'F', '2023-09-01', 'noura.alshammari23@example.com', 4, 'scientific', 75),\n  ('Rawan Almalki',    '2006-08-12', 'F', '2023-09-01', 'rawan.almalki24@example.com', 5, 'humanities', 79),\n  ('Rania Alsulami',   '2007-05-13', 'F', '2023-09-01', 'rania.alsulami25@example.com', 6, 'humanities', 76),\n  ('Ahmed Alotaibi',   '2007-04-08', 'M', '2023-09-01', 'ahmed.alotaibi26@example.com', 6, 'humanities', 88),\n  ('Rawan Alsulami',   '2006-07-28', 'F', '2023-09-01', 'rawan.alsulami27@example.com', 6, 'humanities', 76),\n  ('Mohammed Alsaud',  '2008-08-17', 'M', '2023-09-01', 'mohammed.alsaud28@example.com', 4, 'scientific', 86),\n  ('Saad Alqahtani',   '2007-07-07', 'M', '2023-09-01', 'saad.alqahtani29@example.com', 5, 'scientific', 90);\n\n/* ----------  10 teachers  ---------- */\nINSERT INTO teachers\n        (teacher_name,\n         date_of_birth, gender,\n         teacher_email, office_number)\nVALUES\n  ('Ahmed Aldossari',   '1992-01-07', 'M', 'ahmed.aldossari@example.com',    'B107'),\n  ('Ibrahim Alsulami',  '1985-09-20', 'M', 'ibrahim.alsulami@example.com',   'B150'),\n  ('Hassan Alotaibi',   '1981-05-23', 'M', 'hassan.alotaibi@example.com',    'B193'),\n  ('Saad Alshammari',   '1979-07-21', 'M', 'saad.alshammari@example.com',    'B141'),\n  ('Ali Alsaud',        '1988-05-05', 'M', 'ali.alsaud@example.com',         'B434'),\n  ('Fatimah Alshammari','1985-03-09', 'F', 'fatimah.alshammari@example.com', 'B109'),\n  ('Ahmed Alzahrani',   '1984-06-19', 'M', 'ahmed.alzahrani@example.com',    'B121'),\n  ('Rawan Alsulami',    '1981-08-21', 'F', 'rawan.alsulami@example.com',     'B322'),\n  ('Nada Alghamdi',     '1989-05-01', 'F', 'nada.alghamdi@example.com',      'B170'),\n  ('Ali Alqahtani',     '1991-06-26', 'M', 'ali.alqahtani@example.com',      'B288');\n\n/* ----------  6 subjects  ---------- */\nINSERT INTO subjects (subject_name) VALUES\n  ('Geography'),\n  ('Biology'),\n  ('Mathematics'),\n  ('History'),\n  ('Physics'),\n  ('Art');\n",
+    "content": "-- MySQL dump 10.13  Distrib 9.3.0, for macos15.2 (arm64)\n--\n-- Host: localhost    Database: Excellence_School\n-- ------------------------------------------------------\n-- Server version\t9.3.0\n\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\n/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\n/*!50503 SET NAMES utf8mb4 */;\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\n/*!40103 SET TIME_ZONE='+00:00' */;\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\n/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\n/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\n\n--\n-- Current Database: `Excellence_School`\n--\n\nCREATE DATABASE /*!32312 IF NOT EXISTS*/ `Excellence_School` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;\n\nUSE `Excellence_School`;\n\n--\n-- Table structure for table `students`\n--\n\nDROP TABLE IF EXISTS `students`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `students` (\n  `student_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `student_name` varchar(255) NOT NULL,\n  `date_of_birth` date NOT NULL,\n  `gender` char(1) NOT NULL,\n  `date_of_enrollment` date NOT NULL,\n  `student_email` varchar(255) DEFAULT NULL,\n  `academic_level` tinyint unsigned NOT NULL,\n  `track` varchar(10) NOT NULL,\n  `cumulative_gpa` decimal(5,0) NOT NULL,\n  PRIMARY KEY (`student_id`),\n  UNIQUE KEY `student_email` (`student_email`),\n  CONSTRAINT `students_chk_1` CHECK ((`gender` in (_utf8mb4'F',_utf8mb4'M'))),\n  CONSTRAINT `students_chk_2` CHECK ((`academic_level` between 1 and 6)),\n  CONSTRAINT `students_chk_3` CHECK ((`track` in (_utf8mb4'scientific',_utf8mb4'humanities'))),\n  CONSTRAINT `students_chk_4` CHECK ((`cumulative_gpa` between 0 and 100))\n) ENGINE=InnoDB AUTO_INCREMENT=100030 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Table structure for table `subjects`\n--\n\nDROP TABLE IF EXISTS `subjects`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `subjects` (\n  `subject_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `subject_name` varchar(255) NOT NULL,\n  PRIMARY KEY (`subject_id`)\n) ENGINE=InnoDB AUTO_INCREMENT=300006 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Table structure for table `teachers`\n--\n\nDROP TABLE IF EXISTS `teachers`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `teachers` (\n  `teacher_id` int unsigned NOT NULL AUTO_INCREMENT,\n  `teacher_name` varchar(255) NOT NULL,\n  `date_of_birth` date NOT NULL,\n  `gender` char(1) NOT NULL,\n  `teacher_email` varchar(255) DEFAULT NULL,\n  `office_number` varchar(20) DEFAULT NULL,\n  PRIMARY KEY (`teacher_id`),\n  UNIQUE KEY `teacher_email` (`teacher_email`),\n  CONSTRAINT `teachers_chk_1` CHECK ((`gender` in (_utf8mb4'F',_utf8mb4'M')))\n) ENGINE=InnoDB AUTO_INCREMENT=200010 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping routines for database 'Excellence_School'\n--\n/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;\n\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\n/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;\n\n-- Dump completed on 2025-07-13 15:20:17\n-- MySQL dump 10.13  Distrib 9.3.0, for macos15.2 (arm64)\n--\n-- Host: localhost    Database: Excellence_School\n-- ------------------------------------------------------\n-- Server version\t9.3.0\n\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\n/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\n/*!50503 SET NAMES utf8mb4 */;\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\n/*!40103 SET TIME_ZONE='+00:00' */;\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\n/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\n/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\n\n--\n-- Current Database: `Excellence_School`\n--\n\nCREATE DATABASE /*!32312 IF NOT EXISTS*/ `Excellence_School` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;\n\nUSE `Excellence_School`;\n\n--\n-- Dumping data for table `students`\n--\n\nLOCK TABLES `students` WRITE;\n/*!40000 ALTER TABLE `students` DISABLE KEYS */;\nINSERT INTO `students` VALUES (100000,'Leen Aldossari','2009-08-13','F','2023-09-01','leen.aldossari0@example.com',3,'humanities',87),(100001,'Rania Alzahrani','2006-02-20','F','2023-09-01','rania.alzahrani1@example.com',3,'scientific',80),(100002,'Fatimah Alenzi','2009-06-16','F','2023-09-01','fatimah.alenzi2@example.com',5,'scientific',89),(100003,'Noura Alqahtani','2005-09-16','F','2023-09-01','noura.alqahtani3@example.com',4,'humanities',66),(100004,'Nasser Alghamdi','2007-07-23','M','2023-09-01','nasser.alghamdi4@example.com',6,'scientific',78),(100005,'Nada Alshammari','2006-12-28','F','2023-09-01','nada.alshammari5@example.com',1,'scientific',94),(100006,'Omar Aldhafeeri','2009-08-03','M','2023-09-01','omar.aldhafeeri6@example.com',1,'humanities',76),(100007,'Fatimah Alotaibi','2006-09-11','F','2023-09-01','fatimah.alotaibi7@example.com',5,'scientific',75),(100008,'Lina Alharbi','2006-10-08','F','2023-09-01','lina.alharbi8@example.com',3,'scientific',74),(100009,'Ibrahim Alshehri','2009-05-16','M','2023-09-01','ibrahim.alshehri9@example.com',1,'scientific',86),(100010,'Sultan Alshehri','2009-12-30','M','2023-09-01','sultan.alshehri10@example.com',5,'humanities',71),(100011,'Salma Aldhafeeri','2007-11-19','F','2023-09-01','salma.aldhafeeri11@example.com',4,'humanities',87),(100012,'Lina Alsulami','2006-06-03','F','2023-09-01','lina.alsulami12@example.com',3,'scientific',68),(100013,'Rania Alsulami','2007-01-24','F','2023-09-01','rania.alsulami13@example.com',3,'scientific',86),(100014,'Khalid Aldhafeeri','2008-01-04','M','2023-09-01','khalid.aldhafeeri14@example.com',2,'scientific',89),(100015,'Ibrahim Alotaibi','2005-10-22','M','2023-09-01','ibrahim.alotaibi15@example.com',1,'scientific',62),(100016,'Tariq Alzahrani','2006-07-03','M','2023-09-01','tariq.alzahrani16@example.com',3,'scientific',72),(100017,'Yousef Almalki','2008-12-04','M','2023-09-01','yousef.almalki17@example.com',4,'scientific',100),(100018,'Sultan Alsulami','2008-02-27','M','2023-09-01','sultan.alsulami18@example.com',3,'scientific',82),(100019,'Hassan Alsulami','2007-01-17','M','2023-09-01','hassan.alsulami19@example.com',4,'scientific',90),(100020,'Hatem Aldossari','2007-12-16','M','2023-09-01','hatem.aldossari20@example.com',5,'scientific',89),(100021,'Nasser Almalki','2007-03-11','M','2023-09-01','nasser.almalki21@example.com',5,'humanities',74),(100022,'Yousef Alsaud','2007-11-14','M','2023-09-01','yousef.alsaud22@example.com',5,'humanities',79),(100023,'Noura Alshammari','2007-12-01','F','2023-09-01','noura.alshammari23@example.com',4,'scientific',75),(100024,'Rawan Almalki','2006-08-12','F','2023-09-01','rawan.almalki24@example.com',5,'humanities',79),(100025,'Rania Alsulami','2007-05-13','F','2023-09-01','rania.alsulami25@example.com',6,'humanities',76),(100026,'Ahmed Alotaibi','2007-04-08','M','2023-09-01','ahmed.alotaibi26@example.com',6,'humanities',88),(100027,'Rawan Alsulami','2006-07-28','F','2023-09-01','rawan.alsulami27@example.com',6,'humanities',76),(100028,'Mohammed Alsaud','2008-08-17','M','2023-09-01','mohammed.alsaud28@example.com',4,'scientific',86),(100029,'Saad Alqahtani','2007-07-07','M','2023-09-01','saad.alqahtani29@example.com',5,'scientific',90);\n/*!40000 ALTER TABLE `students` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Dumping data for table `subjects`\n--\n\nLOCK TABLES `subjects` WRITE;\n/*!40000 ALTER TABLE `subjects` DISABLE KEYS */;\nINSERT INTO `subjects` VALUES (300000,'Geography'),(300001,'Biology'),(300002,'English'),(300003,'History'),(300004,'Physical_Education'),(300005,'Art');\n/*!40000 ALTER TABLE `subjects` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Dumping data for table `teachers`\n--\n\nLOCK TABLES `teachers` WRITE;\n/*!40000 ALTER TABLE `teachers` DISABLE KEYS */;\nINSERT INTO `teachers` VALUES (200000,'Ahmed Aldossari','1992-01-07','M','ahmed.aldossari@example.com','B107'),(200001,'Ibrahim Alsulami','1985-09-20','M','ibrahim.alsulami@example.com','B150'),(200002,'Hassan Alotaibi','1981-05-23','M','hassan.alotaibi@example.com','B193'),(200003,'Saad Alshammari','1979-07-21','M','saad.alshammari@example.com','B141'),(200004,'Ali Alsaud','1988-05-05','M','ali.alsaud@example.com','B434'),(200005,'Fatimah Alshammari','1985-03-09','F','fatimah.alshammari@example.com','B109'),(200006,'Ahmed Alzahrani','1984-06-19','M','ahmed.alzahrani@example.com','B121'),(200007,'Rawan Alsulami','1981-08-21','F','rawan.alsulami@example.com','B322'),(200008,'Nada Alghamdi','1989-05-01','F','nada.alghamdi@example.com','B170'),(200009,'Ali Alqahtani','1991-06-26','M','ali.alqahtani@example.com','B288');\n/*!40000 ALTER TABLE `teachers` ENABLE KEYS */;\nUNLOCK TABLES;\n/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;\n\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\n/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;\n\n-- Dump completed on 2025-07-13 15:21:00\n",
     "options": {
         "tabSize": 4,
         "indentSize": 4,
@@ -10,179 +10,38 @@
         "defaultEOL": "LF",
         "trimAutoWhitespace": true
     },
-    "viewState": null,
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 164,
+                    "column": 41
+                },
+                "position": {
+                    "lineNumber": 164,
+                    "column": 41
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 1,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 0
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
     "contexts": [
         {
             "state": {
                 "start": 1,
-                "end": 111,
-                "language": "mysql",
-                "result": {
-                    "type": "text",
-                    "text": [
-                        {
-                            "type": 2,
-                            "index": 0,
-                            "resultId": "598fc1f9-5dca-4fa2-b11a-674dfd3e25af",
-                            "content": "OK, 3 rows affected in 9.451ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 1,
-                            "resultId": "6709b426-ab90-4e14-ca07-6f4a23d667cb",
-                            "content": "OK, 1 row affected in 1.203ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 2,
-                            "resultId": "d42be769-fdf5-44a2-b2d1-dc600641d137",
-                            "content": "OK, 0 records retrieved in 0.33ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 3,
-                            "resultId": "13c07119-cb99-4068-c687-23da9065796c",
-                            "content": "OK, 0 records retrieved in 9.588ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 4,
-                            "resultId": "3f8bf568-487e-402f-e0ac-b816b24337c3",
-                            "content": "OK, 0 records retrieved in 7.251ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 5,
-                            "resultId": "471931d1-cd4d-4fbf-cd59-ca5ca4d62e12",
-                            "content": "OK, 0 records retrieved in 3.299ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 6,
-                            "resultId": "55c1c7a0-a4b3-453c-8333-c0419372ffe1",
-                            "content": "OK, 30 rows affected in 2.28ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 7,
-                            "resultId": "eb344417-a368-4021-820c-190104e61016",
-                            "content": "OK, 10 rows affected in 2.226ms"
-                        },
-                        {
-                            "type": 2,
-                            "index": 8,
-                            "resultId": "cb48e644-81e6-4b57-bd56-92bbd2ab85db",
-                            "content": "OK, 6 rows affected in 1.007ms"
-                        },
-                        {
-                            "type": 5,
-                            "index": -1,
-                            "content": "✓ SQL Script execution completed in 82ms. 9 statements executed successfully.",
-                            "language": "ansi"
-                        }
-                    ]
-                },
-                "currentHeight": 300,
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 119
-                        },
-                        "contentStart": 78,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 119,
-                            "length": 89
-                        },
-                        "contentStart": 174,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 208,
-                            "length": 76
-                        },
-                        "contentStart": 262,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 284,
-                            "length": 1143
-                        },
-                        "contentStart": 331,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 1427,
-                            "length": 701
-                        },
-                        "contentStart": 1523,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 2128,
-                            "length": 340
-                        },
-                        "contentStart": 2223,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 2468,
-                            "length": 3573
-                        },
-                        "contentStart": 2558,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 6041,
-                            "length": 1025
-                        },
-                        "contentStart": 6085,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 7066,
-                            "length": 177
-                        },
-                        "contentStart": 7109,
-                        "state": 0
-                    },
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 7243,
-                            "length": 1
-                        },
-                        "contentStart": 7242,
-                        "state": 3
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 1,
-                "end": 111,
+                "end": 165,
                 "language": "mysql",
                 "currentSet": 1,
                 "statements": [
@@ -190,90 +49,639 @@
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 119
+                            "length": 259
                         },
-                        "contentStart": 78,
+                        "contentStart": 194,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 119,
-                            "length": 89
+                            "start": 259,
+                            "length": 68
                         },
-                        "contentStart": 174,
+                        "contentStart": 260,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 208,
+                            "start": 327,
+                            "length": 66
+                        },
+                        "contentStart": 328,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 393,
+                            "length": 31
+                        },
+                        "contentStart": 394,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 424,
+                            "length": 44
+                        },
+                        "contentStart": 425,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 468,
+                            "length": 36
+                        },
+                        "contentStart": 469,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 504,
+                            "length": 69
+                        },
+                        "contentStart": 505,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 573,
+                            "length": 84
+                        },
+                        "contentStart": 574,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 657,
                             "length": 76
                         },
-                        "contentStart": 262,
+                        "contentStart": 658,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 284,
-                            "length": 1143
+                            "start": 733,
+                            "length": 57
                         },
-                        "contentStart": 331,
+                        "contentStart": 734,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 1427,
-                            "length": 701
+                            "start": 790,
+                            "length": 215
                         },
-                        "contentStart": 1523,
+                        "contentStart": 840,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 2128,
-                            "length": 340
+                            "start": 1005,
+                            "length": 26
                         },
-                        "contentStart": 2223,
+                        "contentStart": 1007,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 2468,
-                            "length": 3573
+                            "start": 1031,
+                            "length": 81
                         },
-                        "contentStart": 2558,
+                        "contentStart": 1081,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 6041,
-                            "length": 1025
+                            "start": 1112,
+                            "length": 63
                         },
-                        "contentStart": 6085,
+                        "contentStart": 1113,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 7066,
-                            "length": 177
+                            "start": 1175,
+                            "length": 48
                         },
-                        "contentStart": 7109,
+                        "contentStart": 1176,
                         "state": 0
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 7243,
-                            "length": 1
+                            "start": 1223,
+                            "length": 876
                         },
-                        "contentStart": 7242,
+                        "contentStart": 1224,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2099,
+                            "length": 57
+                        },
+                        "contentStart": 2100,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2156,
+                            "length": 81
+                        },
+                        "contentStart": 2206,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2237,
+                            "length": 63
+                        },
+                        "contentStart": 2238,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2300,
+                            "length": 48
+                        },
+                        "contentStart": 2301,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2348,
+                            "length": 238
+                        },
+                        "contentStart": 2349,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2586,
+                            "length": 57
+                        },
+                        "contentStart": 2587,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2643,
+                            "length": 81
+                        },
+                        "contentStart": 2693,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2724,
+                            "length": 63
+                        },
+                        "contentStart": 2725,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2787,
+                            "length": 48
+                        },
+                        "contentStart": 2788,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2835,
+                            "length": 516
+                        },
+                        "contentStart": 2836,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3351,
+                            "length": 57
+                        },
+                        "contentStart": 3352,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3408,
+                            "length": 102
+                        },
+                        "contentStart": 3469,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3510,
+                            "length": 41
+                        },
+                        "contentStart": 3512,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3551,
+                            "length": 60
+                        },
+                        "contentStart": 3552,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3611,
+                            "length": 50
+                        },
+                        "contentStart": 3612,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3661,
+                            "length": 64
+                        },
+                        "contentStart": 3662,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3725,
+                            "length": 66
+                        },
+                        "contentStart": 3726,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3791,
+                            "length": 64
+                        },
+                        "contentStart": 3792,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3855,
+                            "length": 42
+                        },
+                        "contentStart": 3856,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 3897,
+                            "length": 302
+                        },
+                        "contentStart": 4134,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4199,
+                            "length": 68
+                        },
+                        "contentStart": 4200,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4267,
+                            "length": 66
+                        },
+                        "contentStart": 4268,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4333,
+                            "length": 31
+                        },
+                        "contentStart": 4334,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4364,
+                            "length": 44
+                        },
+                        "contentStart": 4365,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4408,
+                            "length": 36
+                        },
+                        "contentStart": 4409,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4444,
+                            "length": 69
+                        },
+                        "contentStart": 4445,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4513,
+                            "length": 84
+                        },
+                        "contentStart": 4514,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4597,
+                            "length": 76
+                        },
+                        "contentStart": 4598,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4673,
+                            "length": 57
+                        },
+                        "contentStart": 4674,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4730,
+                            "length": 215
+                        },
+                        "contentStart": 4780,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4945,
+                            "length": 26
+                        },
+                        "contentStart": 4947,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 4971,
+                            "length": 75
+                        },
+                        "contentStart": 5017,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 5046,
+                            "length": 49
+                        },
+                        "contentStart": 5047,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 5095,
+                            "length": 3210
+                        },
+                        "contentStart": 5096,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8305,
+                            "length": 48
+                        },
+                        "contentStart": 8306,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8353,
+                            "length": 15
+                        },
+                        "contentStart": 8354,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8368,
+                            "length": 75
+                        },
+                        "contentStart": 8414,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8443,
+                            "length": 49
+                        },
+                        "contentStart": 8444,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8492,
+                            "length": 154
+                        },
+                        "contentStart": 8493,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8646,
+                            "length": 48
+                        },
+                        "contentStart": 8647,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8694,
+                            "length": 15
+                        },
+                        "contentStart": 8695,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8709,
+                            "length": 75
+                        },
+                        "contentStart": 8755,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8784,
+                            "length": 49
+                        },
+                        "contentStart": 8785,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 8833,
+                            "length": 829
+                        },
+                        "contentStart": 8834,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9662,
+                            "length": 48
+                        },
+                        "contentStart": 9663,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9710,
+                            "length": 15
+                        },
+                        "contentStart": 9711,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9725,
+                            "length": 42
+                        },
+                        "contentStart": 9726,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9767,
+                            "length": 41
+                        },
+                        "contentStart": 9769,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9808,
+                            "length": 60
+                        },
+                        "contentStart": 9809,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9868,
+                            "length": 50
+                        },
+                        "contentStart": 9869,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9918,
+                            "length": 64
+                        },
+                        "contentStart": 9919,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9982,
+                            "length": 66
+                        },
+                        "contentStart": 9983,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 10048,
+                            "length": 64
+                        },
+                        "contentStart": 10049,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 10112,
+                            "length": 42
+                        },
+                        "contentStart": 10113,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 10154,
+                            "length": 43
+                        },
+                        "contentStart": 10153,
                         "state": 3
                     }
                 ]
