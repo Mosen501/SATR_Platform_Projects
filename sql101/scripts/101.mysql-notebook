@@ -1,0 +1,284 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "Script",
+    "content": "-- Remove the database if it already exists (avoids “database exists” error)\nDROP DATABASE IF EXISTS Excellence_School;\n\n-- Create a fresh database named “Excellence_School”\nCREATE DATABASE Excellence_School;\n\n-- Make the new database the current working schema\nUSE Excellence_School;\n\n/* ----------  Students table  ---------- */\nCREATE TABLE students (\n    student_id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  -- numeric surrogate key (starts at 100000)\n    student_name       VARCHAR(255) NOT NULL,                    -- full name in UTF-8\n    date_of_birth      DATE NOT NULL,                            -- YYYY-MM-DD\n    gender             CHAR(1) NOT NULL                          -- 'F' or 'M'\n                       CHECK (gender IN ('F','M')),\n    date_of_enrollment DATE NOT NULL,                            -- when the student joined\n    student_email      VARCHAR(255) UNIQUE,                      -- must be unique\n    academic_level     TINYINT UNSIGNED NOT NULL                 -- 1 to 6\n                       CHECK (academic_level BETWEEN 1 AND 6),\n    track              VARCHAR(10) NOT NULL                      -- `scientific` or `humanities`\n                       CHECK (track IN ('scientific','humanities')),\n    cumulative_gpa     DECIMAL(5,0) NOT NULL                     -- 0 to 100, no decimals stored\n                       CHECK (cumulative_gpa BETWEEN 0 AND 100)\n) AUTO_INCREMENT = 100000;   -- first generated student_id will be 100000\n\n\n\n/* ----------  Teachers table  ---------- */\nCREATE TABLE teachers (\n    teacher_id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  -- numeric surrogate key (starts at 200000)\n    teacher_name   VARCHAR(255) NOT NULL,                    -- full name\n    date_of_birth  DATE NOT NULL,                            -- YYYY-MM-DD\n    gender         CHAR(1) NOT NULL                          -- 'F' or 'M'\n                   CHECK (gender IN ('F','M')),\n    teacher_email  VARCHAR(255) UNIQUE,                      -- unique e-mail address\n    office_number  VARCHAR(20)                               -- on-campus office identifier\n) AUTO_INCREMENT = 200000;  -- first generated teacher_id will be 200000\n\n\n\n/* ----------  Subjects table  ---------- */\nCREATE TABLE subjects (\n    subject_id   INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  -- numeric surrogate key (starts at 300000)\n    subject_name VARCHAR(255) NOT NULL                     -- course title (e.g. “Biology”)\n) AUTO_INCREMENT = 300000;  -- first generated subject_id will be 300000\n\n/* ----------  30 students  ---------- */\nINSERT INTO students\n        (student_name,\n         date_of_birth, gender,\n         date_of_enrollment, student_email,\n         academic_level, track, cumulative_gpa)\nVALUES\n  ('Leen Aldossari',   '2009-08-13', 'F', '2023-09-01', 'leen.aldossari0@example.com', 3, 'humanities', 87),\n  ('Rania Alzahrani',  '2006-02-20', 'F', '2023-09-01', 'rania.alzahrani1@example.com', 3, 'scientific', 80),\n  ('Fatimah Alenzi',   '2009-06-16', 'F', '2023-09-01', 'fatimah.alenzi2@example.com', 5, 'scientific', 89),\n  ('Noura Alqahtani',  '2005-09-16', 'F', '2023-09-01', 'noura.alqahtani3@example.com', 4, 'humanities', 66),\n  ('Nasser Alghamdi',  '2007-07-23', 'M', '2023-09-01', 'nasser.alghamdi4@example.com', 6, 'scientific', 78),\n  ('Nada Alshammari',  '2006-12-28', 'F', '2023-09-01', 'nada.alshammari5@example.com', 1, 'scientific', 94),\n  ('Omar Aldhafeeri',  '2009-08-03', 'M', '2023-09-01', 'omar.aldhafeeri6@example.com', 1, 'humanities', 76),\n  ('Fatimah Alotaibi', '2006-09-11', 'F', '2023-09-01', 'fatimah.alotaibi7@example.com', 5, 'scientific', 75),\n  ('Lina Alharbi',     '2006-10-08', 'F', '2023-09-01', 'lina.alharbi8@example.com', 3, 'scientific', 74),\n  ('Ibrahim Alshehri', '2009-05-16', 'M', '2023-09-01', 'ibrahim.alshehri9@example.com', 1, 'scientific', 86),\n  ('Sultan Alshehri',  '2009-12-30', 'M', '2023-09-01', 'sultan.alshehri10@example.com', 5, 'humanities', 71),\n  ('Salma Aldhafeeri', '2007-11-19', 'F', '2023-09-01', 'salma.aldhafeeri11@example.com', 4, 'humanities', 87),\n  ('Lina Alsulami',    '2006-06-03', 'F', '2023-09-01', 'lina.alsulami12@example.com', 3, 'scientific', 68),\n  ('Rania Alsulami',   '2007-01-24', 'F', '2023-09-01', 'rania.alsulami13@example.com', 3, 'scientific', 86),\n  ('Khalid Aldhafeeri','2008-01-04', 'M', '2023-09-01', 'khalid.aldhafeeri14@example.com', 2, 'scientific', 89),\n  ('Ibrahim Alotaibi', '2005-10-22', 'M', '2023-09-01', 'ibrahim.alotaibi15@example.com', 1, 'scientific', 62),\n  ('Tariq Alzahrani',  '2006-07-03', 'M', '2023-09-01', 'tariq.alzahrani16@example.com', 3, 'scientific', 72),\n  ('Yousef Almalki',   '2008-12-04', 'M', '2023-09-01', 'yousef.almalki17@example.com', 4, 'scientific',100),\n  ('Sultan Alsulami',  '2008-02-27', 'M', '2023-09-01', 'sultan.alsulami18@example.com', 3, 'scientific', 82),\n  ('Hassan Alsulami',  '2007-01-17', 'M', '2023-09-01', 'hassan.alsulami19@example.com', 4, 'scientific', 90),\n  ('Hatem Aldossari',  '2007-12-16', 'M', '2023-09-01', 'hatem.aldossari20@example.com', 5, 'scientific', 89),\n  ('Nasser Almalki',   '2007-03-11', 'M', '2023-09-01', 'nasser.almalki21@example.com', 5, 'humanities', 74),\n  ('Yousef Alsaud',    '2007-11-14', 'M', '2023-09-01', 'yousef.alsaud22@example.com', 5, 'humanities', 79),\n  ('Noura Alshammari', '2007-12-01', 'F', '2023-09-01', 'noura.alshammari23@example.com', 4, 'scientific', 75),\n  ('Rawan Almalki',    '2006-08-12', 'F', '2023-09-01', 'rawan.almalki24@example.com', 5, 'humanities', 79),\n  ('Rania Alsulami',   '2007-05-13', 'F', '2023-09-01', 'rania.alsulami25@example.com', 6, 'humanities', 76),\n  ('Ahmed Alotaibi',   '2007-04-08', 'M', '2023-09-01', 'ahmed.alotaibi26@example.com', 6, 'humanities', 88),\n  ('Rawan Alsulami',   '2006-07-28', 'F', '2023-09-01', 'rawan.alsulami27@example.com', 6, 'humanities', 76),\n  ('Mohammed Alsaud',  '2008-08-17', 'M', '2023-09-01', 'mohammed.alsaud28@example.com', 4, 'scientific', 86),\n  ('Saad Alqahtani',   '2007-07-07', 'M', '2023-09-01', 'saad.alqahtani29@example.com', 5, 'scientific', 90);\n\n/* ----------  10 teachers  ---------- */\nINSERT INTO teachers\n        (teacher_name,\n         date_of_birth, gender,\n         teacher_email, office_number)\nVALUES\n  ('Ahmed Aldossari',   '1992-01-07', 'M', 'ahmed.aldossari@example.com',    'B107'),\n  ('Ibrahim Alsulami',  '1985-09-20', 'M', 'ibrahim.alsulami@example.com',   'B150'),\n  ('Hassan Alotaibi',   '1981-05-23', 'M', 'hassan.alotaibi@example.com',    'B193'),\n  ('Saad Alshammari',   '1979-07-21', 'M', 'saad.alshammari@example.com',    'B141'),\n  ('Ali Alsaud',        '1988-05-05', 'M', 'ali.alsaud@example.com',         'B434'),\n  ('Fatimah Alshammari','1985-03-09', 'F', 'fatimah.alshammari@example.com', 'B109'),\n  ('Ahmed Alzahrani',   '1984-06-19', 'M', 'ahmed.alzahrani@example.com',    'B121'),\n  ('Rawan Alsulami',    '1981-08-21', 'F', 'rawan.alsulami@example.com',     'B322'),\n  ('Nada Alghamdi',     '1989-05-01', 'F', 'nada.alghamdi@example.com',      'B170'),\n  ('Ali Alqahtani',     '1991-06-26', 'M', 'ali.alqahtani@example.com',      'B288');\n\n/* ----------  6 subjects  ---------- */\nINSERT INTO subjects (subject_name) VALUES\n  ('Geography'),\n  ('Biology'),\n  ('Mathematics'),\n  ('History'),\n  ('Physics'),\n  ('Art');\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": null,
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 111,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "598fc1f9-5dca-4fa2-b11a-674dfd3e25af",
+                            "content": "OK, 3 rows affected in 9.451ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "6709b426-ab90-4e14-ca07-6f4a23d667cb",
+                            "content": "OK, 1 row affected in 1.203ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 2,
+                            "resultId": "d42be769-fdf5-44a2-b2d1-dc600641d137",
+                            "content": "OK, 0 records retrieved in 0.33ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 3,
+                            "resultId": "13c07119-cb99-4068-c687-23da9065796c",
+                            "content": "OK, 0 records retrieved in 9.588ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 4,
+                            "resultId": "3f8bf568-487e-402f-e0ac-b816b24337c3",
+                            "content": "OK, 0 records retrieved in 7.251ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 5,
+                            "resultId": "471931d1-cd4d-4fbf-cd59-ca5ca4d62e12",
+                            "content": "OK, 0 records retrieved in 3.299ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 6,
+                            "resultId": "55c1c7a0-a4b3-453c-8333-c0419372ffe1",
+                            "content": "OK, 30 rows affected in 2.28ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 7,
+                            "resultId": "eb344417-a368-4021-820c-190104e61016",
+                            "content": "OK, 10 rows affected in 2.226ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 8,
+                            "resultId": "cb48e644-81e6-4b57-bd56-92bbd2ab85db",
+                            "content": "OK, 6 rows affected in 1.007ms"
+                        },
+                        {
+                            "type": 5,
+                            "index": -1,
+                            "content": "✓ SQL Script execution completed in 82ms. 9 statements executed successfully.",
+                            "language": "ansi"
+                        }
+                    ]
+                },
+                "currentHeight": 300,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 119
+                        },
+                        "contentStart": 78,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 119,
+                            "length": 89
+                        },
+                        "contentStart": 174,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 208,
+                            "length": 76
+                        },
+                        "contentStart": 262,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 284,
+                            "length": 1143
+                        },
+                        "contentStart": 331,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1427,
+                            "length": 701
+                        },
+                        "contentStart": 1523,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2128,
+                            "length": 340
+                        },
+                        "contentStart": 2223,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2468,
+                            "length": 3573
+                        },
+                        "contentStart": 2558,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 6041,
+                            "length": 1025
+                        },
+                        "contentStart": 6085,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 7066,
+                            "length": 177
+                        },
+                        "contentStart": 7109,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 7243,
+                            "length": 1
+                        },
+                        "contentStart": 7242,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 1,
+                "end": 111,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 119
+                        },
+                        "contentStart": 78,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 119,
+                            "length": 89
+                        },
+                        "contentStart": 174,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 208,
+                            "length": 76
+                        },
+                        "contentStart": 262,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 284,
+                            "length": 1143
+                        },
+                        "contentStart": 331,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1427,
+                            "length": 701
+                        },
+                        "contentStart": 1523,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2128,
+                            "length": 340
+                        },
+                        "contentStart": 2223,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2468,
+                            "length": 3573
+                        },
+                        "contentStart": 2558,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 6041,
+                            "length": 1025
+                        },
+                        "contentStart": 6085,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 7066,
+                            "length": 177
+                        },
+                        "contentStart": 7109,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 7243,
+                            "length": 1
+                        },
+                        "contentStart": 7242,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
