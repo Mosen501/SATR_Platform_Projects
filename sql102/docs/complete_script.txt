@@ -1,0 +1,128 @@
+/**********************************************************************
+  SQL-102 Final Project — Extension of SQL 101
+  ------------------------------------------------------------
+  This script meets the 13 requirements while building
+  on the existing SQ-101 database
+**********************************************************************/
+
+/*--------------------------------------------------
+  1.  TOP-STUDENTS  (GPA > 90)
+--------------------------------------------------*/
+DROP TABLE IF EXISTS top_students;
+CREATE TABLE top_students AS
+SELECT *
+FROM   students
+WHERE  cumulative_gpa > 90;
+
+
+/*--------------------------------------------------
+  2.  FAILING-STUDENTS  (GPA < 60)
+--------------------------------------------------*/
+DROP TABLE IF EXISTS failing_students;
+CREATE TABLE failing_students AS
+SELECT *
+FROM   students
+WHERE  cumulative_gpa < 60;
+
+
+/*--------------------------------------------------
+  3.  STUDENT NAMES BEGINNING WITH “A”
+--------------------------------------------------*/
+SELECT student_name
+FROM   students
+WHERE  student_name LIKE 'A%';
+
+
+/*--------------------------------------------------
+  4.  NAMES WITH EXACTLY FOUR PARTS
+--------------------------------------------------*/
+SELECT student_name
+FROM   students
+WHERE student_name LIKE '____ %'
+
+
+/*--------------------------------------------------
+  5.  AVG / MAX / MIN OF CUMULATIVE GPA
+--------------------------------------------------*/
+SELECT
+    AVG(cumulative_gpa) AS avg_gpa,
+    MAX(cumulative_gpa) AS max_gpa,
+    MIN(cumulative_gpa) AS min_gpa
+FROM students
+
+
+/*--------------------------------------------------
+  6.  LEVEL-6 “TOP STUDENTS” WITH GPA = 100
+--------------------------------------------------*/
+SELECT student_name
+FROM   top_students
+WHERE  academic_level = 6
+  AND  cumulative_gpa = 100
+
+
+/*--------------------------------------------------
+  7.  LEVEL-1 STUDENTS AGED 15 – 16 YEARS
+--------------------------------------------------*/
+SELECT
+    student_name,
+    TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) AS age
+FROM   students
+WHERE  academic_level = 1
+HAVING age BETWEEN 15 AND 16 
+
+
+/*--------------------------------------------------
+  8.  COUNT OF LEVEL-2 STUDENTS
+--------------------------------------------------*/
+SELECT COUNT(*) AS level2_count
+FROM   students
+WHERE  academic_level = 2
+
+
+/*--------------------------------------------------
+  9.  DISTINCT TRACKS FOLLOWED BY STUDENTS
+--------------------------------------------------*/
+SELECT DISTINCT track
+FROM   students
+
+
+/*--------------------------------------------------
+ 10.  SUBJECT NAMES IN UPPER-CASE
+--------------------------------------------------*/
+SELECT UPPER(subject_name) AS subject_upper
+FROM   subjects
+
+
+/*--------------------------------------------------
+ 11.  AVERAGE GPA ROUNDED DOWN
+--------------------------------------------------*/
+SELECT FLOOR(AVG(cumulative_gpa)) AS avg_gpa_floor
+FROM   students
+
+
+/*--------------------------------------------------
+ 12.  REPLACE GENDER CODES WITH FULL WORDS
+--------------------------------------------------*/
+-- 12-a  Drop the auto-named check that allows only ‘F’ or ‘M’
+ALTER TABLE students
+DROP CHECK students_chk_5;
+
+-- 12-b  Enlarge the column to fit the full words
+ALTER TABLE students
+MODIFY COLUMN gender VARCHAR(6);   -- big enough for “Female”
+
+-- 12-c  Update the values
+UPDATE students
+SET    gender = REPLACE(
+                   REPLACE(gender,'F','Female'),
+                   'M','Male'
+                   )
+WHERE  gender IN ('F','M');
+
+
+/*--------------------------------------------------
+ 13.  ADD 5 POINTS TO GPAs BELOW 60
+--------------------------------------------------*/
+UPDATE students
+SET    cumulative_gpa = cumulative_gpa + 5
+WHERE  cumulative_gpa < 60

@@ -1,0 +1,17 @@
+Using what you learned during this course, apply the following requirements. Note that this project is a continuation of the **SQL Level 1** project.
+
+**Requirements:**
+
+1. Create a **top-students** table from the *students* table that contains the records of students whose cumulative GPA is higher than 90.
+2. Create a **failing-students** table from the *students* table that contains the records of students whose cumulative GPA is lower than 60.
+3. Display the names of students whose names begin with the letter **A**.
+4. Display the names of students whose names contain exactly **four parts**.
+5. Apply the aggregate functions **AVG**, **MAX**, and **MIN** to the students’ cumulative GPA and give each result a clear alias.
+6. Retrieve and display the names of **top students** in **level 6** who have a cumulative GPA equal to **100**.
+7. Display the students who are in **level 1** and whose ages are between **15 and 16 years**.
+8. Display the **count** of students who are in **level 2**.
+9. List the **tracks** followed by students in the school **without duplicates**.
+10. Display the subject names, but show each name in **uppercase** letters.
+11. Display the **average cumulative GPA**, rounding the number **down** to the nearest whole number (using numeric functions).
+12. In the *students* table, **replace** every value of gender **F** with **Female** and every **M** with **Male** (using string functions).
+13. **Update** the cumulative GPA of students whose GPA is below **60** by **adding five points** to their GPA.
