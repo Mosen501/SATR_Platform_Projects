@@ -48,7 +48,7 @@ CREATE TABLE `failing_students` (
   `student_id` int unsigned NOT NULL DEFAULT '0',
   `student_name` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `gender` char(1) NOT NULL,
+  `gender` char(1) DEFAULT NULL,
   `date_of_enrollment` date NOT NULL,
   `student_email` varchar(255) DEFAULT NULL,
   `academic_level` tinyint unsigned NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE `students` (
   `student_id` int unsigned NOT NULL AUTO_INCREMENT,
   `student_name` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `gender` varchar(255) DEFAULT NULL,
+  `gender` varchar(6) DEFAULT NULL,
   `date_of_enrollment` date NOT NULL,
   `student_email` varchar(255) DEFAULT NULL,
   `academic_level` tinyint unsigned NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE `teachers` (
   `teacher_id` int unsigned NOT NULL AUTO_INCREMENT,
   `teacher_name` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `gender` char(1) NOT NULL,
+  `gender` char(6) NOT NULL,
   `teacher_email` varchar(255) DEFAULT NULL,
   `office_number` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`teacher_id`),
@@ -113,7 +113,7 @@ CREATE TABLE `top_students` (
   `student_id` int unsigned NOT NULL DEFAULT '0',
   `student_name` varchar(255) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `gender` char(1) NOT NULL,
+  `gender` char(1) DEFAULT NULL,
   `date_of_enrollment` date NOT NULL,
   `student_email` varchar(255) DEFAULT NULL,
   `academic_level` tinyint unsigned NOT NULL,
@@ -135,4 +135,4 @@ CREATE TABLE `top_students` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-14 14:15:15
+-- Dump completed on 2025-07-15  0:22:41
